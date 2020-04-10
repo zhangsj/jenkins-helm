@@ -24,21 +24,21 @@ podTemplate(label: label, containers: [
     stage('单元测试') {
       echo "测试阶段"
     }
- //   stage('代码编译打包') {
-//      try {
-//        container('node') {
-//          echo "2. 代码编译打包阶段"
-//          sh """
-//            npm install
-//            npm run build
-//            ls -la
-//        """
-//        }
-//      } catch (exc) {
-//        println "构建失败 - ${currentBuild.fullDisplayName}"
-//        throw(exc)
-//    }
-//  }
+    stage('代码编译打包') {
+      try {
+        container('node') {
+          echo "2. 代码编译打包阶段"
+          sh """
+            npm install
+            npm run build
+            ls -la
+        """
+        }
+      } catch (exc) {
+        println "构建失败 - ${currentBuild.fullDisplayName}"
+        throw(exc)
+    }
+  }
     stage('构建 Docker 镜像') {
       withCredentials([[$class: 'UsernamePasswordMultiBinding',
         credentialsId: 'dockerhub',
